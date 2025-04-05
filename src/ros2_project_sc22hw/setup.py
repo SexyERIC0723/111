@@ -1,4 +1,6 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+import os
+from glob import glob
 
 package_name = 'ros2_project_sc22hw'
 
@@ -10,8 +12,9 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/launch_robot.py']),
+        ('share/' + package_name, ['launch/launch_robot.py']),
         ('share/' + package_name + '/map', ['map/map.pgm', 'map/map.yaml']),
+        (os.path.join('lib', package_name), glob(package_name + '/*.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,5 +27,8 @@ setup(
         'console_scripts': [
             'robot_controller = ros2_project_sc22hw.robot_controller:main',
         ],
+    },
+    package_data={
+        package_name: ['*.py'],
     },
 )
